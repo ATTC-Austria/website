@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Täglich neu bauen, damit „Nächster Termin“ und „Kommende Termine“ ohne Push aktuell bleiben (ca. 2:17 Uhr Wiener Zeit)
+  schedule:
+    - cron: '17 1 * * *'
 
 permissions:
   contents: read

@@ -96,7 +96,7 @@ function home() {
     <ul class="stats__list">
       ${stats.map((s) => `<li class="stat" data-reveal><span class="stat__value"${s.plain ? '' : ` data-count="${s.value}"`}>${s.value}${s.suffix ? `<span class="stat__suffix">${s.suffix}</span>` : ''}</span><span class="stat__label">${s.label}</span></li>`).join('')}
     </ul>
-    ${talkMobility[0].upcoming ? tmNextStrip(talkMobility[0], { variant: 'next-event--home' }) : ''}
+    ${kommendeTermine()[0] ? terminNextStrip(kommendeTermine()[0], { variant: 'next-event--home' }) : ''}
   </div>
 </section>
 
@@ -427,8 +427,7 @@ ${ctaBand({ title: 'Bereit für das Erstgespräch?', text: `Schreiben Sie uns an
 
 // ---------- Veranstaltungen ----------
 function veranstaltungen() {
-  const today = new Date().toISOString().slice(0, 10);
-  const kommende = termine.filter((e) => (e.end || e.date) >= today).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
+  const kommende = kommendeTermine();
   const years = [...new Set(kamingespraeche.map((k) => k.date.slice(0, 4)))];
   const body = `
 ${pageHero({ eyebrow: 'Veranstaltungen', title: 'Wissen teilen.<br>Netzwerk erleben.', lead: 'Der ATTC tritt mit Politik, Wissenschaft und Expert:innen in den Dialog – und macht den Nutzen der Telematik für eine breite Öffentlichkeit sichtbar.', img: 'news/tm16-podium', crumbs: [{ label: 'Veranstaltungen' }] })}
@@ -513,6 +512,33 @@ ${ctaBand({ title: 'Gastgeber eines Kamingesprächs werden?', text: 'Mitglieder 
 
 
 // ---------- talkMobility-Detailseiten ----------
+
+// Kommende Termine ab dem Build-Tag (der Workflow baut täglich neu, damit vergangene Termine verschwinden)
+const kommendeTermine = () => {
+  const today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Vienna' });
+  return termine.filter((e) => (e.end || e.date) >= today).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
+};
+
+// „Nächster Termin“-Leiste auf der Startseite – immer der nächste Eintrag aus `termine`
+const terminNextStrip = (e, { variant = '' } = {}) => {
+  const [y, m, d] = e.date.split('-').map(Number);
+  const weekday = WEEKDAYS[new Date(Date.UTC(y, m - 1, d)).getUTCDay()];
+  const tm = e.tm && talkMobility.find((t) => t.no === e.tm);
+  const href = tm ? tmUrl(tm) : '/veranstaltungen/#termine';
+  let when = weekday;
+  if (e.end) { const [, , d2] = e.end.split('-').map(Number); when = `${d}.–${d2}. ${MONTHS_LONG[m - 1]}`; }
+  const meta = [when, e.time && `${e.time} Uhr`, e.venue || 'Ort folgt'].filter(Boolean).map(esc).join(' · ');
+  return `
+<a class="next-event ${variant}" href="${href}" data-reveal>
+  <time class="tm-next__date" datetime="${e.date}${e.time ? `T${e.time}` : ''}"><span>${d}</span>${MONTHS_LONG[m - 1]} ${y}</time>
+  <span class="next-event__text">
+    <span class="next-event__label"><span class="status-dot"></span>Nächster Termin${tm ? ` · talkMobility ${tm.no}` : ''}</span>
+    <span class="next-event__title">${esc(tm ? tm.title : e.title)}</span>
+    <span class="next-event__meta">${meta}</span>
+  </span>
+  <span class="next-event__cta">${tm ? 'Programm ansehen' : 'Alle Termine'} ${icon('arrow')}</span>
+</a>`;
+};
 
 // Zeile in „Kommende Termine“: Wochentag + Datum (auch mehrtägig), Uhrzeit, Ort
 const terminRow = (e) => {

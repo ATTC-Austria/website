@@ -2,7 +2,7 @@ name: Website bauen & auf GitHub Pages veröffentlichen
 
 on:
   push:
-    branches: [main, master, 'claude/**']
+    branches: [main]
   workflow_dispatch:
 
 permissions:

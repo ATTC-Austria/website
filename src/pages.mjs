@@ -77,7 +77,7 @@ function home() {
   const lastKamin = kamingespraeche[0];
   const body = `
 <section class="hero">
-  <div class="hero__media">${picture('news/fachmesse-pano', '', { eager: true, w: 1600, h: 522 })}</div>
+  <div class="hero__media">${picture('hero/events', '', { eager: true, w: 1500, h: 480 })}</div>
   ${heroNetwork()}
   <div class="container hero__inner">
     <p class="eyebrow eyebrow--light hero__eyebrow" data-reveal><span class="pulse" aria-hidden="true"></span>Austrian Traffic Telematics Cluster · seit ${site.founded}</p>

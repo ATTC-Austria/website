@@ -1,6 +1,6 @@
 import {
   site, orgs, praesidium, vorstand, startmitglieder, generalsekretariat, ehrenmitglieder,
-  memberOrgs, themes, talkMobility, kamingespraeche, milestones, weitereEvents, publications, news,
+  memberOrgs, themes, talkMobility, kamingespraeche, milestones, weitereEvents, termine, publications, news,
 } from './data.mjs';
 import { layout, esc, icon, picture, pageHero, sectionHead, ctaBand, fmtDate, fmtDateShort } from './layout.mjs';
 
@@ -427,17 +427,31 @@ ${ctaBand({ title: 'Bereit für das Erstgespräch?', text: `Schreiben Sie uns an
 
 // ---------- Veranstaltungen ----------
 function veranstaltungen() {
+  const today = new Date().toISOString().slice(0, 10);
+  const kommende = termine.filter((e) => (e.end || e.date) >= today).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
   const years = [...new Set(kamingespraeche.map((k) => k.date.slice(0, 4)))];
   const body = `
 ${pageHero({ eyebrow: 'Veranstaltungen', title: 'Wissen teilen.<br>Netzwerk erleben.', lead: 'Der ATTC tritt mit Politik, Wissenschaft und Expert:innen in den Dialog – und macht den Nutzen der Telematik für eine breite Öffentlichkeit sichtbar.', img: 'news/tm16-podium', crumbs: [{ label: 'Veranstaltungen' }] })}
 
 <nav class="subnav" aria-label="Veranstaltungsformate" data-subnav>
   <div class="container"><ul>
+    ${kommende.length ? `<li><a href="#termine">Kommende Termine<span>${kommende.length}</span></a></li>` : ''}
     <li><a href="#talkmobility">talkMobility<span>${talkMobility.length}</span></a></li>
     <li><a href="#kamingespraeche">Kamingespräche<span>${kamingespraeche.length}</span></a></li>
     <li><a href="#weitere">Weitere Events<span>${weitereEvents.length}</span></a></li>
   </ul></div>
 </nav>
+
+${kommende.length ? `<section class="section section--tint" id="termine" aria-labelledby="termine-title">
+  <div class="container">
+    ${sectionHead({ eyebrow: 'Vorschau', title: 'Kommende Termine', id: 'termine-title', text: 'Die nächsten Treffpunkte des Netzwerks. Mitglieder und Partner erhalten zu jedem Termin eine persönliche Einladung mit allen Details.' })}
+    <ol class="event-list">
+      ${kommende.map(terminRow).join('')}
+    </ol>
+  </div>
+</section>
+
+` : ''}
 
 <section class="section" id="talkmobility" aria-labelledby="tm-title">
   <div class="container split split--top">
@@ -499,6 +513,21 @@ ${ctaBand({ title: 'Gastgeber eines Kamingesprächs werden?', text: 'Mitglieder 
 
 
 // ---------- talkMobility-Detailseiten ----------
+
+// Zeile in „Kommende Termine“: Wochentag + Datum (auch mehrtägig), Uhrzeit, Ort
+const terminRow = (e) => {
+  const [y, m, d] = e.date.split('-').map(Number);
+  const wd = (yy, mm, dd) => WEEKDAYS[new Date(Date.UTC(yy, mm - 1, dd)).getUTCDay()].slice(0, 2);
+  let when = `${wd(y, m, d)}, ${fmtDate(e.date)}`;
+  if (e.end) {
+    const [y2, m2, d2] = e.end.split('-').map(Number);
+    when = m2 === m && y2 === y ? `${d}.–${fmtDate(e.end)}` : `${fmtDate(e.date)} – ${fmtDate(e.end)}`;
+  }
+  const tm = e.tm && talkMobility.find((t) => t.no === e.tm);
+  const title = tm ? `<a href="${tmUrl(tm)}">${esc(e.title)}</a>` : esc(e.title);
+  const meta = [e.time && `${e.time} Uhr`, e.venue || 'Ort folgt'].filter(Boolean).map(esc).join(' · ');
+  return `<li class="event-row" data-reveal><time datetime="${e.date}${e.time ? `T${e.time}` : ''}">${when}</time><div><h3>${title}</h3><p>${meta}</p></div></li>`;
+};
 
 const WEEKDAYS = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
 const MONTHS_LONG = ['Jänner', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];

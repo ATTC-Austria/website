@@ -258,6 +258,19 @@ export const milestones = [
   { year: '2024', title: 'KI-Positionspapier', text: '2. ATTC-Fachmesse mit 130+ Entscheidungsträger:innen und Forderungen an die Bundesregierung.' },
 ];
 
+// Kommende Termine (aus dem ATTC-Jahresprogramm 2026/2027).
+// date: ISO-Datum, optional end (mehrtägig) und time; venue leer = „Ort folgt“; tm: Nummer einer talkMobility-Ausgabe.
+// Vergangene Termine blendet der Build automatisch aus. Interne Gremientermine (Vorstand, Klausur) gehören nicht hierher.
+export const termine = [
+  { date: '2026-12-03', time: '18:00', title: 'ATTC-Weihnachtsfeier', venue: 'VOR Lounge, Wien' },
+  { date: '2027-01-27', title: 'Rückblick: ITS World Congress 2026', venue: 'ASFINAG / online' },
+  { date: '2027-02-24', title: 'ATTC-Jahresstart 2027', venue: '' },
+  { date: '2027-03-09', end: '2027-03-12', title: 'Smart Rail Enquete', venue: 'Wien' },
+  { date: '2027-06-03', time: '16:30', title: 'Generalversammlung', venue: '' },
+  { date: '2027-06-03', time: '18:00', title: 'talkMobility 19: Gen AI – Gefahr oder Chance?', venue: 'Wien', tm: 19 },
+  { date: '2027-12-02', time: '18:00', title: 'ATTC-Weihnachtsfeier', venue: '' },
+];
+
 export const weitereEvents = [
   { date: '2016-11-16', title: 'Verkehrsauskunft Österreich (VAO) – Präsentation', text: 'GF Mag. Mayr und GF DI (FH) Müllner geben Einblick in die Erfolgsgeschichte der VAO, die mit dem ITS World Congress 2012 in Wien begann.' },
   { date: '2013-05-07', title: '10 Jahre ATTC – Innovation by Network', text: 'Jubiläumsfeier in der Wolke 21 des Saturn Towers mit Podiumsdiskussion zu „Intelligenten Mobilitätslösungen von heute und morgen“.' },
@@ -295,10 +308,10 @@ export const news = [
     date: '2026-10-09',
     category: 'talkMobility',
     title: 'Save the Date: talkMobility 19 – „Gen AI: Gefahr oder Chance?“',
-    teaser: 'Am 19. Mai 2027 geht es vom Chatbot zum autonomen Agenten: Was bedeuten agentische KI und digitale Souveränität für die Betreiber kritischer Verkehrsinfrastruktur?',
+    teaser: 'Am 3. Juni 2027 geht es vom Chatbot zum autonomen Agenten: Was bedeuten agentische KI und digitale Souveränität für die Betreiber kritischer Verkehrsinfrastruktur?',
     img: 'tm/tm19-1',
     body: `
-<p>Der nächste talkMobility steht fest: Am <strong>Mittwoch, 19. Mai 2027, ab 18:00 Uhr</strong> lädt der ATTC zur 19. Ausgabe der Vortragsreihe nach Wien. Das Thema: <strong>„Gen AI: Gefahr oder Chance?“</strong></p>
+<p>Der nächste talkMobility steht fest: Am <strong>Donnerstag, 3. Juni 2027, ab 18:00 Uhr</strong> – im Anschluss an die Generalversammlung – lädt der ATTC zur 19. Ausgabe der Vortragsreihe nach Wien. Das Thema: <strong>„Gen AI: Gefahr oder Chance?“</strong></p>
 <h2>Warum gerade jetzt</h2>
 <p>Beim talkMobility 17 standen 2024 die Möglichkeiten künstlicher Intelligenz in der Mobilität im Mittelpunkt. Seither hat sich das Feld rasant weiterentwickelt: KI-Systeme beantworten nicht mehr nur Fragen, sie handeln als <strong>Agenten</strong> zunehmend selbstständig. Für Betreiber von Straße, Schiene und Luftraum stellen sich damit neue Fragen – nach Kontrolle, Haftung und der Abhängigkeit von außereuropäischen Plattformen.</p>
 <h2>Keynote und Podium</h2>

@@ -186,7 +186,7 @@ export function layout({ path, title, description, body, image: imageIn, jsonLd 
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${canonical}">
 <link rel="alternate" hreflang="de" href="${canonical}">
-<meta name="theme-color" content="#edf3f8">
+<meta name="theme-color" content="#ffffff">
 <meta property="og:type" content="${type}">
 <meta property="og:site_name" content="ATTC – Austrian Traffic Telematics Cluster">
 <meta property="og:locale" content="de_AT">

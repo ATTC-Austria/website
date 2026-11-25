@@ -849,28 +849,48 @@ address { font-style: normal; }
    Setzt Tokens über die Basiswerte oben (+ wenige gezielte Overrides).
    ========================================================================== */
 
-/* ---------- Hell & institutionell: weiß, Logo-Blau, sachlich ---------- */
+/* ---------- Hell & institutionell: ATTC-CI ----------
+   Farben aus Logo, Jahresprogramm und bisheriger attc.at:
+   ATTC-Blau #4c7491 · Graublau #9eb5c1 · Schiefer #30434b · Taupe #969076 (Member-Login) · Hintergrund #f4f4f8
+   Schrift: Jost als freie Futura-Alternative für Überschriften und Navigation, Inter für Fließtext. */
 [data-theme='hell'] {
-  --paper: #ffffff; --tint: #f3f6f9; --card: #ffffff;
-  --text: #1b2733; --text-2: #33424f; --muted: #566573; --line: #dfe6ec;
-  --ink: #0f2a40; --ink-2: #163650; --ink-3: #1f4766;
-  --brand: #2b6a96; --brand-600: #2b6a96; --brand-700: #1d5079; --brand-300: #9cc0da; --brand-100: #d6e5f0; --brand-50: #edf4f9;
-  --signal: #2b6a96; --signal-600: #1d5079; --on-signal: #ffffff;
-  --inv: 237, 243, 248; --inv-2: 226, 235, 243; --on-inv: 15, 42, 64; --glow: 77, 116, 146; --inv-accent: #2b6a96;
-  --net: #4d7492; --net-dot: #2b6a96;
+  --paper: #ffffff; --tint: #f4f4f8; --card: #ffffff;
+  --text: #30434b; --text-2: #3f525b; --muted: #5a6870; --line: #dde3e8;
+  --ink: #30434b; --ink-2: #3a5160; --ink-3: #4c7491;
+  --brand: #4c7491; --brand-600: #4c7491; --brand-700: #3d6079; --brand-300: #9eb5c1; --brand-100: #dbe4ea; --brand-50: #eef2f5;
+  --signal: #969076; --signal-600: #716b56; --on-signal: #ffffff;
+  --inv: 244, 244, 248; --inv-2: 230, 236, 240; --on-inv: 48, 67, 75; --glow: 76, 116, 145; --inv-accent: #4c7491;
+  --net: #6f8ea4; --net-dot: #4c7491;
   --hero-img-opacity: 1; --hero-img-filter: none;
-  --font-display: 'Inter', system-ui, sans-serif;
-  --r-sm: 4px; --r: 8px; --r-lg: 10px; --r-btn: 6px;
+  --r-sm: 4px; --r: 8px; --r-lg: 10px; --r-btn: 4px;
 }
-[data-theme='hell'] h1, [data-theme='hell'] h2, [data-theme='hell'] h3, [data-theme='hell'] .stat__value { letter-spacing: -0.025em; font-weight: 650; }
-[data-theme='hell'] .hero__title, [data-theme='hell'] .page-hero__title { font-weight: 700; }
-[data-theme='hell'] .eyebrow::before { display: none; }
+[data-theme='hell'] h1, [data-theme='hell'] h2, [data-theme='hell'] h3, [data-theme='hell'] .stat__value { font-weight: 600; letter-spacing: -0.01em; }
+[data-theme='hell'] .hero__title, [data-theme='hell'] .page-hero__title { font-weight: 600; }
 [data-theme='hell'] .hero::after, [data-theme='hell'] .page-hero__grid { display: none; }
-/* Footer bleibt institutionell dunkelblau: Tokens nur für diesen Bereich zurücksetzen */
-[data-theme='hell'] .site-footer { --inv: 15, 42, 64; --on-inv: 255, 255, 255; --inv-accent: #9cc0da; }
+/* Navigation wie auf attc.at: Futura-artig, ATTC-Blau */
+[data-theme='hell'] .logo__mark { color: var(--brand); }
+[data-theme='hell'] .main-nav a { font-family: var(--font-display); font-size: 0.98rem; font-weight: 500; color: var(--brand); opacity: 1; }
+[data-theme='hell'] .main-nav a:hover { color: var(--brand-700); }
+/* Taupe nur als Akzent (wie der Member-Login auf attc.at); Hauptaktionen und Hervorhebungen in ATTC-Blau */
+[data-theme='hell'] .hero__title em { color: var(--brand); }
+[data-theme='hell'] .btn--signal { --bg: var(--brand); --fg: #fff; }
+[data-theme='hell'] .btn--signal:hover { --bg: var(--brand-700); box-shadow: 0 12px 30px -12px rgba(76, 116, 145, 0.55); }
+[data-theme='hell'] .header-link { background: var(--signal-600); color: #fff; opacity: 1; padding: 0.45rem 0.7rem; border-radius: var(--r-sm); font-family: var(--font-display); text-transform: uppercase; letter-spacing: .03em; font-size: .8rem; transition: background-color var(--dur-fast) ease; }
+[data-theme='hell'] .header-link:hover { background: #5f5a48; }
+[data-theme='hell'] .pulse { box-shadow: 0 0 0 0 rgba(150, 144, 118, .6); animation-name: pulse-taupe; }
+@keyframes pulse-taupe { 70% { box-shadow: 0 0 0 10px rgba(150, 144, 118, 0); } 100% { box-shadow: 0 0 0 0 rgba(150, 144, 118, 0); } }
+[data-theme='hell'] .skip-link { color: #fff; background: var(--signal-600); }
+/* Footer in ATTC-Schiefer */
+[data-theme='hell'] .site-footer { --inv: 48, 67, 75; --on-inv: 255, 255, 255; --inv-accent: #9eb5c1; }
 
 /* Helle Variante: auf schmalen Screens liegt Text über dem ganzen Foto – Foto zurücknehmen */
 @media (max-width: 760px) {
   [data-theme='hell'] { --hero-img-opacity: 0.35; }
 }
 .lightbox [hidden] { display: none; }
+/* Zwischen Tablet und großem Desktop reicht der Platz nicht für Logo-Unterzeile + volle Navigation */
+@media (min-width: 1101px) and (max-width: 1320px) {
+  .logo__sub { display: none; }
+  .main-nav a { padding-inline: 0.6rem; }
+  .main-nav a::after { left: 0.6rem; right: 0.6rem; }
+}

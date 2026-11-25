@@ -880,6 +880,27 @@ address { font-style: normal; }
 [data-theme='hell'] .pulse { box-shadow: 0 0 0 0 rgba(150, 144, 118, .6); animation-name: pulse-taupe; }
 @keyframes pulse-taupe { 70% { box-shadow: 0 0 0 10px rgba(150, 144, 118, 0); } 100% { box-shadow: 0 0 0 0 rgba(150, 144, 118, 0); } }
 [data-theme='hell'] .skip-link { color: #fff; background: var(--signal-600); }
+/* Startseiten-Hero „Tiefblau“: ruhiger Verlauf Schiefer → ATTC-Blau statt Foto, Linien und Kugeln bleiben */
+[data-theme='hell'] .hero {
+  --inv: 48, 67, 75; --on-inv: 255, 255, 255; --inv-accent: #b8cbd6; --net: #9eb5c1; --net-dot: #ffffff;
+  background: #30434b;
+}
+[data-theme='hell'] .hero::before {
+  background:
+    radial-gradient(60% 80% at 85% 15%, rgba(110, 150, 178, 0.55), transparent 65%),
+    radial-gradient(50% 70% at 20% 110%, rgba(76, 116, 145, 0.65), transparent 70%),
+    linear-gradient(120deg, #2b3d45 0%, #3a5566 55%, #4c7491 100%);
+}
+[data-theme='hell'] .hero__title { color: #fff; }
+[data-theme='hell'] .hero__title em { color: #b8cbd6; }
+[data-theme='hell'] .hero .btn--signal { --bg: #ffffff; --fg: #30434b; }
+[data-theme='hell'] .hero .btn--signal:hover { --bg: #e6edf2; box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.45); }
+/* Header über dem dunklen Hero: weiß, bis gescrollt wird */
+[data-theme='hell'] body:has(.hero) .site-header:not(.is-scrolled):not(.is-open) { --on-inv: 255, 255, 255; }
+[data-theme='hell'] body:has(.hero) .site-header:not(.is-scrolled):not(.is-open) :is(.main-nav a, .logo__mark, .nav-toggle) { color: #fff; }
+[data-theme='hell'] body:has(.hero) .site-header:not(.is-scrolled):not(.is-open) .main-nav a:hover { color: #dbe4ea; }
+[data-theme='hell'] body:has(.hero) .site-header:not(.is-scrolled):not(.is-open) .btn--primary:hover { --bg: #fff; --fg: #30434b; --bd: #fff; }
+
 /* Footer in ATTC-Schiefer */
 [data-theme='hell'] .site-footer { --inv: 48, 67, 75; --on-inv: 255, 255, 255; --inv-accent: #9eb5c1; }
 

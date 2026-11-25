@@ -1,4 +1,4 @@
-import { site, themes_design } from './data.mjs';
+import { site } from './data.mjs';
 
 // Escape für Text aus den Daten. Redaktionelles HTML (news.body) wird bewusst nicht escaped.
 export const esc = (s = '') =>
@@ -152,14 +152,6 @@ const footer = () => `
 </footer>`;
 
 
-const themeSwitcher = () => !site.themeSwitcher ? '' : `
-<div class="theme-switch" role="group" aria-label="Design-Variante wählen" data-theme-switch>
-  <span class="theme-switch__label">Design</span>
-  <div class="theme-switch__options">
-    ${themes_design.map((t) => `<button type="button" data-set-theme="${t.id}" data-theme-color="${t.themeColor}" aria-pressed="${t.id === 'technik'}"><span class="theme-switch__swatch" style="background:linear-gradient(135deg, ${t.swatch[0]} 50%, ${t.swatch[1]} 50%)"></span>${t.label}</button>`).join('')}
-  </div>
-</div>`;
-
 export function layout({ path, title, description, body, image: imageIn, jsonLd = null, type = 'website' }) {
   const image = imageIn || '/assets/img/og-image.jpg';
   const fullTitle = path === '/' ? `${site.name}` : `${title} · ATTC`;
@@ -186,7 +178,7 @@ export function layout({ path, title, description, body, image: imageIn, jsonLd 
     ...(jsonLd ? [jsonLd] : []),
   ];
   return `<!doctype html>
-<html lang="de">
+<html lang="de" data-theme="hell">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -194,7 +186,7 @@ export function layout({ path, title, description, body, image: imageIn, jsonLd 
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${canonical}">
 <link rel="alternate" hreflang="de" href="${canonical}">
-<meta name="theme-color" content="#0c1a26">
+<meta name="theme-color" content="#edf3f8">
 <meta property="og:type" content="${type}">
 <meta property="og:site_name" content="ATTC – Austrian Traffic Telematics Cluster">
 <meta property="og:locale" content="de_AT">
@@ -209,7 +201,6 @@ export function layout({ path, title, description, body, image: imageIn, jsonLd 
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="/assets/fonts/jost-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
-${site.themeSwitcher ? `<script>(function(){try{var ok=${JSON.stringify(themes_design.map((t) => t.id))},q=new URLSearchParams(location.search).get('design'),t=q||localStorage.getItem('attc-design');if(q)localStorage.setItem('attc-design',q);if(t&&t!=='technik'&&ok.indexOf(t)>-1)document.documentElement.setAttribute('data-theme',t)}catch(e){}})()</script>` : ''}
 <link rel="stylesheet" href="/assets/css/main.css?v=__VERSION__">
 <script src="/assets/js/main.js?v=__VERSION__" defer></script>
 <script type="application/ld+json">${JSON.stringify(ld.length === 1 ? ld[0] : ld)}</script>
@@ -220,7 +211,6 @@ ${header(path)}
 ${body}
 </main>
 ${footer()}
-${themeSwitcher()}
 </body>
 </html>
 `;

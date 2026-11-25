@@ -21,17 +21,7 @@ export const site = {
   // Bestehender Mitgliederbereich (WordPress) bleibt vorerst erreichbar.
   memberLogin: 'https://www.attc.at/wp-login.php',
   englishSite: 'https://www.attc.at/en/',
-  // Modus-Wechsler für die Design-Varianten (für den Live-Betrieb auf false setzen)
-  themeSwitcher: true,
 };
-
-// Design-Varianten. „technik“ ist der Standard (kein data-theme-Attribut).
-export const themes_design = [
-  { id: 'technik', label: 'Technik', swatch: ['#0c1a26', '#f2a93b'], themeColor: '#0c1a26' },
-  { id: 'fluid', label: 'Fluid', swatch: ['#0f1430', '#22c3d8'], themeColor: '#0f1430' },
-  { id: 'hell', label: 'Hell', swatch: ['#edf3f8', '#2b6a96'], themeColor: '#edf3f8' },
-  { id: 'signal', label: 'Signal', swatch: ['#000000', '#ff7a1a'], themeColor: '#000000' },
-];
 
 // Mitgliedsorganisationen. `key` verweist auf assets/img/logos/<key>.webp
 export const orgs = {
